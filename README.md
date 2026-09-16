@@ -42,7 +42,7 @@ Install this repository as a standalone plugin from the Azure SRE Agent Plugins 
 ├── templates/skill/SKILL.md            # Starter template; not imported
 ├── scripts/validate_plugin.py          # Manifest and strict YAML validation
 ├── requirements-dev.txt                # Pinned validation dependency
-├── .github/workflows/validate.yml      # Pull-request validation
+├── .github/PULL_REQUEST_TEMPLATE.md    # Pull-request checklist
 └── CONTRIBUTING.md                     # Skill authoring and safety rules
 ```
 
@@ -50,7 +50,7 @@ Install this repository as a standalone plugin from the Azure SRE Agent Plugins 
 
 Create skills in `skills/<kebab-case-name>/SKILL.md`. Each skill must include frontmatter with a matching `name` and a specific `description` that explains when it should activate.
 
-Validate the repository before opening a pull request:
+Validate the repository locally before opening a pull request:
 
 ```bash
 python -m pip install --requirement requirements-dev.txt
