@@ -24,7 +24,7 @@ Before using a Carbon Optimization skill:
 4. Additionally assign the general Azure RBAC **Reader** role when the identity needs to discover Azure resource metadata. It is recommended, but it does not replace **Carbon Optimization Reader**.
 5. Use lowercase subscription IDs and first-of-month dates in report requests.
 6. Query the available data range before selecting report dates.
-7. For a Live Report, configure a read-only Carbon connector; installing this plugin alone does not create a data connector.
+7. For a report that refreshes when viewed, configure a read-only Carbon connector. Without a connector, use a scheduled static snapshot only when the user explicitly requests recurring saved output and the agent has scheduled-task, report-save, managed-identity Carbon-query, and local HTML-rendering capabilities.
 
 Do not add client secrets, bearer tokens, customer exports, or unredacted incident data to this repository.
 
@@ -36,7 +36,7 @@ Do not add client secrets, bearer tokens, customer exports, or unredacted incide
 
 ## Live Report setup
 
-The plugin includes an exported [Carbon emissions overview setup](plugins/azure-carbon-sre/templates/live-reports/carbon-emissions-overview.md). It defines the connector contract, subscription-selection rule, dashboard layout, and authoring prompt. Configure the connector first, then use `carbon-emissions-live-report` to create the saved Live Report.
+`carbon-emissions-live-report` supports two dashboard modes. Use the exported [Carbon emissions overview setup](plugins/azure-carbon-sre/templates/live-reports/carbon-emissions-overview.md) with a read-only Carbon connector for view-time refresh. When no connector exists, use its scheduled static-snapshot fallback: a task queries Carbon APIs with the managed identity, renders self-contained HTML, and upserts one report with `allowedTools: []`.
 
 ## Repository layout
 

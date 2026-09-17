@@ -8,7 +8,7 @@
 - `carbon-emissions-assessment` establishes the shared scope, freshness, access, and trend record required by downstream workflows.
 - `carbon-emissions-spike-investigation` identifies category and resource contributors without asserting unsupported root causes.
 - `carbon-emissions-optimization` requires a completed assessment before proposing a verified, non-destructive optimization path.
-- `carbon-emissions-live-report` exports the connector-aware setup required to create a recurring Carbon dashboard.
+- `carbon-emissions-live-report` creates either a connector-backed dashboard or, on explicit request and with the required capabilities, a scheduled static snapshot.
 
 ## Install
 
@@ -24,7 +24,7 @@ Before using a Carbon Optimization skill:
 4. Additionally assign the general Azure RBAC **Reader** role when the identity needs to discover Azure resource metadata. It is recommended, but it does not replace **Carbon Optimization Reader**.
 5. Use lowercase subscription IDs and first-of-month dates in report requests.
 6. Query the available data range before selecting report dates.
-7. Configure a read-only Carbon connector before creating a saved Live Report; installing this plugin alone does not provision one.
+7. Configure a read-only Carbon connector for a dashboard that refreshes when viewed. Without a connector, use the scheduled static-snapshot fallback only when the user explicitly requests recurring saved output and scheduled tasks, report saving, managed-identity Carbon queries, and local HTML rendering are available.
 
 Do not add client secrets, bearer tokens, customer exports, or unredacted incident data to the plugin package.
 
