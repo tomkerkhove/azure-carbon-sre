@@ -8,13 +8,11 @@ End users install this repository as a marketplace, then choose the `carbon-sre`
 
 The importable package declares its skills explicitly in `plugins/carbon-sre/plugin.json`, matching the official Azure SRE Agent marketplace layout.
 
-## Included capabilities
+## Included plugin
 
-- `carbon-optimization-reports` provides a read-only workflow for explicit subscription-scoped Carbon Optimization report queries.
-- `carbon-emissions-assessment` creates the shared scope, freshness, access, and trend record used by downstream skills.
-- `carbon-emissions-spike-investigation` drills into category and resource contributors without asserting unsupported root causes.
-- `carbon-emissions-optimization` requires the completed assessment before it can propose a verified, non-destructive optimization path.
-- `carbon-emissions-live-report` exports the connector-aware setup needed to author a recurring Carbon dashboard.
+| Plugin | Description |
+| --- | --- |
+| [`carbon-sre`](plugins/carbon-sre/README.md) | Carbon Optimization reporting, assessment, spike investigation, evidence-gated optimization, and Live Report setup. |
 
 ## Prerequisites
 
@@ -53,6 +51,16 @@ The plugin includes an exported [Carbon emissions overview setup](plugins/carbon
 └── CONTRIBUTING.md                       # Skill authoring and safety rules
 ```
 
+## Contributing another plugin
+
+This section is for marketplace contributors, not an additional installation step:
+
+1. Add a self-contained package under `plugins/<plugin-name>/`.
+2. Register the package in [`.github/plugin/marketplace.json`](.github/plugin/marketplace.json).
+3. Declare its production skill directories in `plugin.json`; do not add a separate package's skills to `carbon-sre`.
+4. Add a package README and an entry in [Included plugin](#included-plugin).
+5. Follow the full plugin and skill requirements in [CONTRIBUTING.md](CONTRIBUTING.md), then run the repository validation before opening a pull request.
+
 ## Develop
 
 Create skills in `plugins/carbon-sre/skills/<kebab-case-name>/SKILL.md`. Each skill must include frontmatter with a matching `name` and a specific `description` that explains when it should activate.
@@ -60,8 +68,8 @@ Create skills in `plugins/carbon-sre/skills/<kebab-case-name>/SKILL.md`. Each sk
 Validate the marketplace and plugin before opening a pull request:
 
 ```bash
-python -m pip install --requirement requirements-dev.txt
-python scripts/validate_plugin.py
+python3 -m pip install --requirement requirements-dev.txt
+python3 scripts/validate_plugin.py
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for authoring, safety, and review requirements.
