@@ -8,7 +8,7 @@ Azure Carbon SRE is an Azure SRE Agent plugin marketplace for safe, repeatable C
 
 End users install this repository as a marketplace, then choose the `azure-carbon-sre` plugin from the marketplace catalog. For direct URL installation, use `plugins/azure-carbon-sre` as the path in the repository.
 
-The install badge opens a static helper that directs you to your agent's Plugins page and prepares the repository and package path. Installation and authentication remain within your Azure SRE Agent.
+The install badge opens a static helper that directs you to your agent and prepares the repository and package path. Installation and authentication remain within your Azure SRE Agent.
 
 The importable package declares its skills explicitly in `plugins/azure-carbon-sre/plugin.json`, matching the official Azure SRE Agent marketplace layout.
 

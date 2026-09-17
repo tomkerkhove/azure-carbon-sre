@@ -8,14 +8,19 @@ const defaults = {
 
 const query = new URLSearchParams(window.location.search);
 
-function queryValue(name, fallback, maxLength) {
-  const value = query.get(name)?.trim();
-  return value && value.length <= maxLength ? value : fallback;
+function queryValue(name, fallback, maxLength, allowEmpty = false) {
+  const parameter = query.get(name);
+  if (parameter === null) {
+    return fallback;
+  }
+
+  const value = parameter.trim();
+  return value.length <= maxLength && (allowEmpty || value) ? value : fallback;
 }
 
 const plugin = {
   sourceUrl: queryValue("sourceUrl", defaults.sourceUrl, 500),
-  pathInRepo: queryValue("pathInRepo", defaults.pathInRepo, 500),
+  pathInRepo: queryValue("pathInRepo", defaults.pathInRepo, 500, true),
   pluginName: queryValue("pluginName", defaults.pluginName, 80),
 };
 
@@ -74,7 +79,9 @@ document.getElementById("agent-form").addEventListener("submit", (event) => {
     if (
       endpoint.protocol !== "https:" ||
       endpoint.username ||
-      endpoint.password
+      endpoint.password ||
+      endpoint.search ||
+      endpoint.hash
     ) {
       throw new Error("invalid endpoint");
     }
@@ -83,8 +90,7 @@ document.getElementById("agent-form").addEventListener("submit", (event) => {
     return;
   }
 
-  const pluginsUrl = new URL("/builder/plugins", endpoint.origin);
-  window.open(pluginsUrl, "_blank", "noopener,noreferrer");
+  window.open(endpoint, "_blank", "noopener,noreferrer");
   status.textContent =
-    "Agent opened. Select Install from URL and use the values in step 2.";
+    "Agent opened. Go to Builder > Plugins, select Install from URL, and use the values in step 2.";
 });
