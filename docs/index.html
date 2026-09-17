@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' https://img.shields.io; script-src 'self'; style-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests"
+    >
+    <meta name="referrer" content="no-referrer">
+    <meta
+      name="description"
+      content="Open an Azure SRE Agent and install a plugin from a GitHub repository."
+    >
+    <title>Install on Azure SRE Agent</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">Community install helper</p>
+        <h1 id="page-title">Install <span id="plugin-name">Azure Carbon SRE</span></h1>
+        <p class="lead">
+          Open your Azure SRE Agent, then use the prepared repository details to
+          install the plugin.
+        </p>
+      </section>
+
+      <section class="card" aria-labelledby="agent-heading">
+        <div class="step">1</div>
+        <div class="card-content">
+          <h2 id="agent-heading">Open your agent</h2>
+          <p>Enter the HTTPS endpoint for your running Azure SRE Agent.</p>
+          <form id="agent-form">
+            <label for="agent-endpoint">Agent endpoint</label>
+            <div class="field-action">
+              <input
+                id="agent-endpoint"
+                name="agent-endpoint"
+                type="url"
+                inputmode="url"
+                autocomplete="url"
+                placeholder="https://your-agent-endpoint"
+                required
+              >
+              <button class="primary" type="submit">Open Plugins</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="install-heading">
+        <div class="step">2</div>
+        <div class="card-content">
+          <h2 id="install-heading">Install from URL</h2>
+          <p>
+            In <strong>Builder &gt; Plugins</strong>, select
+            <strong>Install from URL</strong> and enter these values.
+          </p>
+
+          <label for="source-url">GitHub repository URL or owner/repo</label>
+          <div class="field-action">
+            <input id="source-url" type="text" readonly>
+            <button type="button" data-copy="source-url">Copy</button>
+          </div>
+
+          <label for="path-in-repo">Path in repo</label>
+          <div class="field-action">
+            <input id="path-in-repo" type="text" readonly>
+            <button type="button" data-copy="path-in-repo">Copy</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="share-heading">
+        <div class="step">3</div>
+        <div class="card-content">
+          <h2 id="share-heading">Share the installer</h2>
+          <p>Add the generated badge to another repository.</p>
+          <label for="badge-markdown">Badge Markdown</label>
+          <div class="field-action">
+            <input id="badge-markdown" type="text" readonly>
+            <button type="button" data-copy="badge-markdown">Copy</button>
+          </div>
+          <img
+            class="badge-preview"
+            src="https://img.shields.io/badge/Install%20on-Azure%20SRE%20Agent-0078D4?logo=microsoftazure&amp;logoColor=white"
+            alt="Install on Azure SRE Agent"
+          >
+        </div>
+      </section>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+
+      <aside class="privacy">
+        <strong>Privacy:</strong> This static helper does not receive credentials
+        or installation status. Authentication and installation stay in your
+        Azure SRE Agent.
+      </aside>
+    </main>
+
+    <footer>
+      <a
+        href="https://learn.microsoft.com/azure/sre-agent/install-plugin-from-url"
+        rel="noreferrer"
+      >Azure SRE Agent installation documentation</a>
+      <span aria-hidden="true">·</span>
+      <a
+        href="https://github.com/tomkerkhove/azure-carbon-sre"
+        rel="noreferrer"
+      >Source</a>
+    </footer>
+  </body>
+</html>
