@@ -1,5 +1,7 @@
 # Azure Carbon SRE
 
+[![Install to Azure SRE Agent](https://img.shields.io/badge/Install-Azure%20SRE%20Agent-0078D4?logo=microsoftazure&logoColor=white)](https://tomkerkhove.github.io/azure-sre-agent-plugin-installer/?repo=tomkerkhove%2Fazure-carbon-sre&theme=dark)
+
 Azure Carbon SRE is an Azure SRE Agent plugin marketplace for safe, repeatable Carbon Optimization operations. The installable `azure-carbon-sre` package includes skills for report queries, assessment, spike investigation, optimization recommendations, and Live Report setup.
 
 ## Install
