@@ -19,7 +19,7 @@ The importable package declares its skills explicitly in `plugins/carbon-sre/plu
 Before using a Carbon Optimization skill:
 
 1. Target an Azure subscription with Carbon Optimization data available.
-2. Authenticate to Azure Resource Manager (`https://management.azure.com`).
+2. Authenticate to Azure Resource Manager (`https://management.azure.com`). For hosted agents, use the agent's managed identity and follow the [managed identity authentication guide](plugins/carbon-sre/README.md#managed-identity-authentication).
 3. Grant the calling user, service principal, or managed identity the **Carbon Optimization Reader** role on each target subscription.
 4. Use lowercase subscription IDs and first-of-month dates in report requests.
 5. Query the available data range before selecting report dates.
