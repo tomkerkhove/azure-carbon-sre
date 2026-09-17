@@ -12,13 +12,20 @@
 
 ## Install
 
-Install the parent repository as a marketplace, then select the `azure-carbon-sre` plugin. For direct repository installation, use `plugins/azure-carbon-sre` as the package path.
+Install this repository as a marketplace, then select the `azure-carbon-sre` plugin. For direct repository installation, use `plugins/azure-carbon-sre` as the package path.
 
 ## Prerequisites
 
-See the parent [Azure Carbon SRE prerequisites](../../README.md#prerequisites) before running a Carbon Optimization skill. In particular, the calling identity needs the **Carbon Optimization Reader** role on every target subscription.
+Before using a Carbon Optimization skill:
 
-A saved Live Report also requires a read-only Carbon connector. Installing this plugin alone does not provision a connector.
+1. Target an Azure subscription with Carbon Optimization data available.
+2. Authenticate to Azure Resource Manager at `https://management.azure.com`.
+3. Grant the calling user, service principal, or managed identity the **Carbon Optimization Reader** role on every target subscription.
+4. Use lowercase subscription IDs and first-of-month dates in report requests.
+5. Query the available data range before selecting report dates.
+6. Configure a read-only Carbon connector before creating a saved Live Report; installing this plugin alone does not provision one.
+
+Do not add client secrets, bearer tokens, customer exports, or unredacted incident data to the plugin package.
 
 ## Managed identity authentication
 
@@ -54,4 +61,10 @@ If `carbonEmissionReports` returns HTTP `502` with `BearerFallbackDisabled`, ver
 
 ## Contribute
 
-See the repository [contribution guide](../../CONTRIBUTING.md) for skill and plugin authoring requirements.
+To add a skill to this package:
+
+1. Create `skills/<skill-name>/SKILL.md` using lowercase kebab-case for `<skill-name>`.
+2. Add YAML frontmatter with a `name` that matches the directory and a specific `description` that states when the skill should activate.
+3. Write an evidence-driven procedure that starts with read-only discovery and requires explicit confirmation, impact assessment, and rollback guidance for mutations.
+4. Keep skill-specific references beside the skill and use `templates/` only for material that is not installed as a production skill.
+5. From the marketplace repository checkout, run `python3 scripts/validate_plugin.py` before opening a pull request.
