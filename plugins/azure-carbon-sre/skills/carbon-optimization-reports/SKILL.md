@@ -17,9 +17,20 @@ Use this skill for requests to retrieve or interpret Azure Carbon Optimization e
 ## Safety and access
 
 - Treat report queries as read-only.
-- Use an Azure Resource Manager token for `https://management.azure.com`.
+- Use an Azure Resource Manager token for `https://management.azure.com` and send it as `Authorization: Bearer <token>` on every Carbon API request.
+- For a hosted agent, obtain the token through its managed identity: use `az login --identity` for a system-assigned identity, or `az login --identity --client-id <client-id>` for a user-assigned identity, then request the `https://management.azure.com` resource token. SDK callers should use `DefaultAzureCredential` with the `https://management.azure.com/.default` scope.
 - Confirm the calling service principal or managed identity has the `Carbon Optimization Reader` role on every target subscription.
 - Never expose bearer tokens, client secrets, or raw customer export data beyond the requested scope.
+
+### Managed identity failure diagnosis
+
+If `carbonEmissionReports` returns HTTP `502` with `BearerFallbackDisabled`:
+
+1. Confirm the request used the hosted agent's managed identity, an Azure Resource Manager token, and the `Authorization` header; do not fall back to a copied user token.
+2. Verify `Carbon Optimization Reader` is assigned to that exact identity at each requested subscription scope. An availability request succeeding with the same token does not prove that report access is authorized.
+3. Capture the tracking ID, UTC timestamp, API version, and requested subscription IDs for escalation if the role assignment is present and the failure persists.
+
+See [managed identity authentication](../../README.md#managed-identity-authentication) for the Azure CLI role-assignment and token-acquisition examples.
 
 ## Workflow
 
