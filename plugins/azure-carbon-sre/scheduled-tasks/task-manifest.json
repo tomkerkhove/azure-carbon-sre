@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "task": {
+    "id": "carbon-static-snapshot",
+    "yaml": "carbon-static-snapshot-weekly.yaml",
+    "defaultCron": "0 15 * * 1",
+    "defaultModelTier": "ReasoningHeavy",
+    "description": "Part of the Azure Carbon SRE plugin - a weekly static Carbon Optimization emissions snapshot for one explicitly configured subscription.",
+    "prompt": "prompts/carbon-static-snapshot.txt",
+    "tags": ["carbon", "carbon-static-snapshot"]
+  }
+}

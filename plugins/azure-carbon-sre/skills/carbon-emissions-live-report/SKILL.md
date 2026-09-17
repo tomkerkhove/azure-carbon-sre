@@ -53,9 +53,10 @@ Use this mode when no Carbon connector is configured but the user explicitly wan
 ### Schedule setup
 
 1. Use this mode only after the user explicitly requests a recurring saved snapshot and confirms the subscription scope.
-2. Choose an intentional cadence. Carbon data is monthly, so weekly or daily refreshes are normally sufficient; avoid high-frequency polling.
-3. List existing scheduled tasks and reports first. Use a stable scope-specific name such as `Carbon: Emissions Snapshot (<subscription-short-id>)`; do not reuse a generic dashboard name.
-4. During interactive setup, compare scope, cadence, purpose, and mode for each similar task or report. Ask the user to choose reuse, replacement, or a distinct name before altering an existing object.
+2. For repeatable opt-in setup, `plugins/azure-carbon-sre/install-api.sh` installs the package and creates one review-mode task per explicit lowercase `CARBON_SUBSCRIPTIONS` value. Marketplace installation alone cannot create a task; the installer must never infer scope, grant RBAC, delete a task, or replace a task owned by another agent.
+3. Choose an intentional cadence. Carbon data is monthly, so weekly or daily refreshes are normally sufficient; avoid high-frequency polling.
+4. List existing scheduled tasks and reports first. Use a stable scope-specific task name such as `Carbon: Emissions Snapshot (<subscription-id>)`; do not reuse a generic dashboard name.
+5. During interactive setup, compare scope, cadence, purpose, and mode for each similar task or report. Ask the user to choose reuse, replacement, or a distinct name before altering an existing object.
 5. Create one named task with an explicit subscription scope, safe read-only constraints, and a rollback path: pausing or cancelling that exact task.
 6. State that the report will first exist after the task's first successful execution if there is no immediate-run capability.
 

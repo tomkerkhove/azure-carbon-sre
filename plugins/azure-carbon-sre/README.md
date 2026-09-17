@@ -14,6 +14,20 @@
 
 Install this repository as a marketplace, then select the `azure-carbon-sre` plugin. For direct repository installation, use `plugins/azure-carbon-sre` as the package path.
 
+Marketplace installation imports skills only; it cannot execute an install hook or create scheduled tasks. To install the plugin **and** automatically provision static snapshot tasks, run the package's explicit API installer:
+
+```bash
+AGENT_RESOURCE_ID=/subscriptions/<agent-subscription>/resourceGroups/<agent-resource-group>/providers/Microsoft.App/agents/<agent-name> \
+CARBON_SUBSCRIPTIONS=<lowercase-subscription-id>[,<lowercase-subscription-id>] \
+./install-api.sh
+```
+
+The installer requires `az` (logged in), `curl`, and `python3`. It derives the target agent endpoint and user-assigned managed identity from `AGENT_RESOURCE_ID`, installs the plugin through the agent management API, and creates one weekly **review-mode** task per specified subscription. It never infers a subscription, grants RBAC, deletes tasks, or replaces a task that targets another agent. Re-running it updates only exact task-name matches for the same task agent **and** the matching immutable installer ownership marker.
+
+Optional configuration: `ENDPOINT` (endpoint consistency check), `GITHUB_PAT` (private repository clone), `TASK_AGENT_NAME` (defaults to the ARM agent name), `CARBON_TASK_CRON` (default `0 15 * * 1` UTC), and `CARBON_MODEL_TIER` (default `ReasoningHeavy`).
+
+Rollback is to pause or cancel only the exact `Carbon: Emissions Snapshot (<subscription-id>)` task(s) created for the supplied subscriptions.
+
 ## Prerequisites
 
 Before using a Carbon Optimization skill:
@@ -24,7 +38,8 @@ Before using a Carbon Optimization skill:
 4. Additionally assign the general Azure RBAC **Reader** role when the identity needs to discover Azure resource metadata. It is recommended, but it does not replace **Carbon Optimization Reader**.
 5. Use lowercase subscription IDs and first-of-month dates in report requests.
 6. Query the available data range before selecting report dates.
-7. Configure a read-only Carbon connector for a dashboard that refreshes when viewed. Without a connector, use the scheduled static-snapshot fallback only when the user explicitly requests recurring saved output and scheduled tasks, report saving, managed-identity Carbon queries, and local HTML rendering are available.
+7. Configure a read-only Carbon connector for a dashboard that refreshes when viewed. Without a connector, use the scheduled static-snapshot fallback only when recurring saved output, scheduled tasks, report saving, managed-identity Carbon queries, and local HTML rendering are available.
+8. For automated snapshot provisioning, grant the agent's user-assigned managed identity **Carbon Optimization Reader** on every explicit `CARBON_SUBSCRIPTIONS` value before the first task run. The installer deliberately does not create role assignments.
 
 Do not add client secrets, bearer tokens, customer exports, or unredacted incident data to the plugin package.
 

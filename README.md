@@ -6,7 +6,17 @@ Azure Carbon SRE is an Azure SRE Agent plugin marketplace for safe, repeatable C
 
 End users install this repository as a marketplace, then choose the `azure-carbon-sre` plugin from the marketplace catalog. For direct URL installation, use `plugins/azure-carbon-sre` as the path in the repository.
 
-The importable package declares its skills explicitly in `plugins/azure-carbon-sre/plugin.json`, matching the official Azure SRE Agent marketplace layout.
+The importable package declares its skills explicitly in `plugins/azure-carbon-sre/plugin.json`, matching the official Azure SRE Agent marketplace layout. Marketplace installation imports skills only; it cannot execute repository hooks or create a scheduled task.
+
+To install the package and provision a weekly static-snapshot task for each explicitly selected subscription, use the opt-in package installer:
+
+```bash
+AGENT_RESOURCE_ID=/subscriptions/<agent-subscription>/resourceGroups/<agent-resource-group>/providers/Microsoft.App/agents/<agent-name> \
+CARBON_SUBSCRIPTIONS=<lowercase-subscription-id>[,<lowercase-subscription-id>] \
+./plugins/azure-carbon-sre/install-api.sh
+```
+
+The installer is idempotent only for exact same-agent task names carrying its immutable ownership marker, and refuses to infer subscription scope, grant Carbon RBAC, delete tasks, or replace another agent's task. See the package [installation guide](plugins/azure-carbon-sre/README.md#install) for configuration and rollback.
 
 ## Included plugin
 
@@ -45,6 +55,8 @@ Do not add client secrets, bearer tokens, customer exports, or unredacted incide
 ├── .github/plugin/marketplace.json      # Marketplace manifest
 ├── plugins/azure-carbon-sre/             # Installable plugin package
 │   ├── plugin.json                       # Plugin manifest with skills/ declaration
+│   ├── install-api.sh                    # Opt-in plugin plus snapshot-task installer
+│   ├── scheduled-tasks/                  # Canonical snapshot prompt, renderer, and YAML
 │   ├── skills/                           # Production skills imported by the plugin
 │   └── templates/                        # Supporting templates; not imported as skills
 ├── scripts/validate_plugin.py            # Marketplace and package validation
