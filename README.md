@@ -20,10 +20,11 @@ Before using a Carbon Optimization skill:
 
 1. Target an Azure subscription with Carbon Optimization data available.
 2. Authenticate to Azure Resource Manager (`https://management.azure.com`). For hosted agents, use the agent's managed identity and follow the [managed identity authentication guide](plugins/azure-carbon-sre/README.md#managed-identity-authentication).
-3. Grant the calling user, service principal, or managed identity the **Carbon Optimization Reader** role on each target subscription.
-4. Use lowercase subscription IDs and first-of-month dates in report requests.
-5. Query the available data range before selecting report dates.
-6. For a Live Report, configure a read-only Carbon connector; installing this plugin alone does not create a data connector.
+3. Grant the calling user, service principal, or managed identity the **Carbon Optimization Reader** role on each target subscription. This role is required for Carbon report queries.
+4. Additionally assign the general Azure RBAC **Reader** role when the identity needs to discover Azure resource metadata. It is recommended, but it does not replace **Carbon Optimization Reader**.
+5. Use lowercase subscription IDs and first-of-month dates in report requests.
+6. Query the available data range before selecting report dates.
+7. For a Live Report, configure a read-only Carbon connector; installing this plugin alone does not create a data connector.
 
 Do not add client secrets, bearer tokens, customer exports, or unredacted incident data to this repository.
 

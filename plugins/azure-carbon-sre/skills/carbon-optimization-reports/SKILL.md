@@ -19,7 +19,8 @@ Use this skill for requests to retrieve or interpret Azure Carbon Optimization e
 - Treat report queries as read-only.
 - Use an Azure Resource Manager token for `https://management.azure.com` and send it as `Authorization: Bearer <token>` on every Carbon API request.
 - For a hosted agent, obtain the token through its managed identity: use `az login --identity` for a system-assigned identity, or `az login --identity --client-id <client-id>` for a user-assigned identity, then request the `https://management.azure.com` resource token. SDK callers should use `DefaultAzureCredential` with the `https://management.azure.com/.default` scope.
-- Confirm the calling service principal or managed identity has the `Carbon Optimization Reader` role on every target subscription.
+- Confirm the calling service principal or managed identity has `Carbon Optimization Reader` on every target subscription; this role is required for Carbon report queries.
+- The general Azure RBAC `Reader` role is additionally recommended when the identity needs Azure resource discovery. It does not replace `Carbon Optimization Reader`.
 - Never expose bearer tokens, client secrets, or raw customer export data beyond the requested scope.
 
 ### Managed identity failure diagnosis
