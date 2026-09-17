@@ -24,13 +24,13 @@ Use this skill after `carbon-emissions-assessment` establishes a `CarbonAssessme
 
 ## Output
 
-Extend the assessment record with:
+Extend the assessment with concise, decision-ready Markdown. Do not expose raw field names, camelCase keys, or schema-shaped labels to the user. Use sentence-cased headings and clear phrases; use a table when comparing more than one contributor.
 
 ```text
-Investigation
-- targetMonthOrRange: <date range>
-- primaryContributors: <resource types, resources, locations>
-- absoluteChangesKgCO2e: <ranked values>
-- corroborationNeeded: <cost, utilization, deployment, or telemetry signals>
-- conclusion: <observed contributor pattern, not an unsupported root cause>
+### Investigation
+**Investigated period:** <date range>
+**Primary contributors:** <resource types, resources, locations>
+**Largest absolute changes:** <ranked kgCO2e values>
+**Corroboration still needed:** <cost, utilization, deployment, or telemetry signals>
+**Conclusion:** <observed contributor pattern, not an unsupported root cause>
 ```
