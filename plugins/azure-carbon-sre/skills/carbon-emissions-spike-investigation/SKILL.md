@@ -20,7 +20,9 @@ Use this skill after `carbon-emissions-assessment` establishes a `CarbonAssessme
 3. Query `TopItemsSummaryReport` for the affected month by `ResourceType`, `ResourceGroup`, or `Location`.
 4. Query `ItemDetailsReport` for the affected month and category. Follow pagination until `skipToken` is empty.
 5. Rank contributors by absolute kgCO2e change and contribution to the selected period, not percentage alone.
-6. Identify candidates for corroboration with cost, utilization, deployment, or service telemetry. Do not label a root cause until an independent source supports it.
+6. For leading resource-level contributors, use an ARM read when available to verify resource ID, type, location, provisioning state, and current SKU or capacity. If access is denied, state that the resource proof is unavailable.
+7. Render a monthly trend chart and a contributor bar chart when the report data supports them. Pair each chart with a one-sentence observation; do not substitute a chart for the underlying evidence table.
+8. Identify candidates for corroboration with cost, utilization, deployment, or service telemetry. Do not label a root cause until an independent source supports it.
 
 ## Output
 
@@ -31,6 +33,16 @@ Extend the assessment with concise, decision-ready Markdown. Do not expose raw f
 **Investigated period:** <date range>
 **Primary contributors:** <resource types, resources, locations>
 **Largest absolute changes:** <ranked kgCO2e values>
+
+### Resource proof
+| Resource | ID | State | Current SKU or capacity |
+| --- | --- | --- | --- |
+| <resource name> | <resource ID> | <state or unavailable> | <SKU, capacity, or unavailable> |
+
+### Charts
+- <monthly trend chart and its one-sentence takeaway>
+- <contributor bar chart and its one-sentence takeaway>
+
 **Corroboration still needed:** <cost, utilization, deployment, or telemetry signals>
 **Conclusion:** <observed contributor pattern, not an unsupported root cause>
 ```
