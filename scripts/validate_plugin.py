@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
-"""Validate the portable Carbon SRE plugin structure with PyYAML."""
+"""Validate the Carbon SRE marketplace and installable plugin package with PyYAML."""
 
 from __future__ import annotations
 
 import json
 import re
-import sys
 from pathlib import Path
 
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
+PLUGIN_NAME = "carbon-sre"
+PLUGIN_ROOT = ROOT / "plugins" / PLUGIN_NAME
+MARKETPLACE_PATH = ROOT / ".github" / "plugin" / "marketplace.json"
 NAME_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 SEMVER_PATTERN = re.compile(r"^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$")
 
@@ -18,6 +20,18 @@ SEMVER_PATTERN = re.compile(r"^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.
 def fail(message: str) -> None:
     print(f"ERROR: {message}")
     raise SystemExit(1)
+
+
+def load_json(path: Path, label: str) -> dict[str, object]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        fail(f"{label} is required at {path.relative_to(ROOT)}")
+    except json.JSONDecodeError as exc:
+        fail(f"{path.relative_to(ROOT)} is not valid JSON: {exc}")
+    if not isinstance(value, dict):
+        fail(f"{path.relative_to(ROOT)} must contain a JSON object")
+    return value
 
 
 def parse_frontmatter(path: Path) -> dict[str, object]:
@@ -43,29 +57,55 @@ def parse_frontmatter(path: Path) -> dict[str, object]:
     return metadata
 
 
+def validate_marketplace() -> None:
+    marketplace = load_json(MARKETPLACE_PATH, "marketplace.json")
+    if marketplace.get("name") != "carbon-sre-plugins":
+        fail("marketplace name must be carbon-sre-plugins")
+
+    owner = marketplace.get("owner")
+    metadata = marketplace.get("metadata")
+    plugins = marketplace.get("plugins")
+    if not isinstance(owner, dict) or not isinstance(owner.get("name"), str):
+        fail("marketplace owner.name must be a non-empty string")
+    if not isinstance(metadata, dict) or not isinstance(metadata.get("description"), str):
+        fail("marketplace metadata.description must be a non-empty string")
+    if not isinstance(metadata.get("version"), str) or not SEMVER_PATTERN.fullmatch(metadata["version"]):
+        fail("marketplace metadata.version must use semantic versioning")
+    if not isinstance(plugins, list):
+        fail("marketplace plugins must be an array")
+
+    expected_source = f"./plugins/{PLUGIN_NAME}"
+    matched = [
+        plugin
+        for plugin in plugins
+        if isinstance(plugin, dict)
+        and plugin.get("name") == PLUGIN_NAME
+        and plugin.get("source") == expected_source
+    ]
+    if len(matched) != 1:
+        fail(f"marketplace must contain one {PLUGIN_NAME} plugin at {expected_source}")
+
+
 def validate_manifest() -> None:
-    manifest_path = ROOT / "plugin.json"
-    try:
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    except FileNotFoundError:
-        fail("plugin.json is required at repository root")
-    except json.JSONDecodeError as exc:
-        fail(f"plugin.json is not valid JSON: {exc}")
+    manifest_path = PLUGIN_ROOT / "plugin.json"
+    manifest = load_json(manifest_path, "plugin.json")
 
-    for key in ("name", "version", "description"):
+    for key in ("name", "version", "description", "license"):
         if not isinstance(manifest.get(key), str) or not manifest[key].strip():
-            fail(f"plugin.json requires a non-empty string '{key}'")
+            fail(f"{manifest_path.relative_to(ROOT)} requires a non-empty string '{key}'")
 
-    if not NAME_PATTERN.fullmatch(manifest["name"]):
-        fail("plugin.json name must be lowercase kebab-case")
+    if manifest["name"] != PLUGIN_NAME or not NAME_PATTERN.fullmatch(manifest["name"]):
+        fail(f"{manifest_path.relative_to(ROOT)} name must be {PLUGIN_NAME}")
     if not SEMVER_PATTERN.fullmatch(manifest["version"]):
-        fail("plugin.json version must be semantic versioning")
+        fail(f"{manifest_path.relative_to(ROOT)} version must use semantic versioning")
+    if manifest.get("skills") != ["skills/"]:
+        fail(f"{manifest_path.relative_to(ROOT)} must declare skills as [\"skills/\"]")
 
 
 def validate_skills() -> None:
-    skill_paths = sorted((ROOT / "skills").glob("*/SKILL.md"))
+    skill_paths = sorted((PLUGIN_ROOT / "skills").glob("*/SKILL.md"))
     if not skill_paths:
-        fail("at least one production skills/<name>/SKILL.md file is required")
+        fail("at least one plugins/carbon-sre/skills/<name>/SKILL.md file is required")
 
     for path in skill_paths:
         metadata = parse_frontmatter(path)
@@ -75,16 +115,15 @@ def validate_skills() -> None:
                 f"{path.relative_to(ROOT)} frontmatter name must match directory "
                 f"'{expected_name}'"
             )
-        if not metadata.get("description"):
-            fail(f"{path.relative_to(ROOT)} requires a non-empty description")
         if not NAME_PATTERN.fullmatch(metadata["name"]):
             fail(f"{path.relative_to(ROOT)} name must be lowercase kebab-case")
 
 
 def main() -> None:
+    validate_marketplace()
     validate_manifest()
     validate_skills()
-    print("Plugin validation passed.")
+    print("Marketplace and plugin validation passed.")
 
 
 if __name__ == "__main__":
