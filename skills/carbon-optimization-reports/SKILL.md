@@ -7,6 +7,13 @@ description: Query Azure Carbon Optimization availability and emissions reports,
 
 Use this skill for requests to retrieve or interpret Azure Carbon Optimization emissions data.
 
+## Subscription selection is mandatory
+
+1. Check whether the user explicitly supplied subscription IDs.
+2. If none were supplied, ask which subscriptions to query before sending a report request. When concrete candidates are available, present them as choices.
+3. Do not default to the agent subscription, a prior conversation scope, or every accessible subscription.
+4. Confirm selected IDs are lowercase and repeat the final scope in the result.
+
 ## Safety and access
 
 - Treat report queries as read-only.
