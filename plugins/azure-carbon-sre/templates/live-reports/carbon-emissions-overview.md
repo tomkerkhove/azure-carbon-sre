@@ -10,7 +10,7 @@ Provide exact connector tool names for these operations during report authoring:
 - Summary report: accepts explicit `subscriptionList`, `carbonScopeList`, `dateRange`, and `reportType`.
 - Detailed report: additionally accepts `categoryType`, ordering, page size, top-item count, and pagination token when relevant.
 
-The connector identity needs `Carbon Optimization Reader` on every selected subscription. It must never return bearer tokens or accept arbitrary ARM URLs.
+The connector identity must have `Carbon Optimization Reader` on every selected subscription; this role is required for Carbon report queries. The general Azure RBAC `Reader` role is additionally recommended when the connector needs resource discovery, but it does not replace `Carbon Optimization Reader`. The connector must never return bearer tokens or accept arbitrary ARM URLs.
 
 ## Required filters
 

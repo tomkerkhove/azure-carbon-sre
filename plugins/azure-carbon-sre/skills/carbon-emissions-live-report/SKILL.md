@@ -10,7 +10,8 @@ Use this skill when the user wants a recurring Carbon Optimization dashboard.
 ## Preconditions
 
 - A Live Report can retrieve Carbon data only through a configured connector.
-- Confirm a read-only Carbon connector exists before attempting to save a report. The connector must use an identity with `Carbon Optimization Reader` on the selected subscriptions.
+- Confirm a read-only Carbon connector exists before attempting to save a report. The connector identity must have `Carbon Optimization Reader` on the selected subscriptions; this role is required for Carbon report queries.
+- The general Azure RBAC `Reader` role is additionally recommended when the connector needs Azure resource discovery. It does not replace `Carbon Optimization Reader`.
 - If no connector exists, use `templates/live-reports/carbon-emissions-overview.md` as the exported setup blueprint. Do not create a static report and call it live.
 
 ## Required connector operations
