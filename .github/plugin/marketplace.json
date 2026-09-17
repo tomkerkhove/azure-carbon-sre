@@ -1,17 +1,17 @@
 {
-  "name": "carbon-sre-plugins",
+  "name": "azure-carbon-sre-plugins",
   "owner": {
     "name": "Tom Kerkhove"
   },
   "metadata": {
-    "description": "Carbon Optimization skills and Live Report setup for Azure SRE Agent.",
+    "description": "Azure Carbon SRE skills and Live Report setup for Azure SRE Agent.",
     "version": "1.0.0"
   },
   "plugins": [
     {
-      "name": "carbon-sre",
-      "description": "Azure SRE Agent plugin for Carbon Optimization reporting, assessment, investigation, optimization, and Live Report setup.",
-      "source": "./plugins/carbon-sre"
+      "name": "azure-carbon-sre",
+      "description": "Azure Carbon SRE plugin for Carbon Optimization reporting, assessment, investigation, optimization, and Live Report setup.",
+      "source": "./plugins/azure-carbon-sre"
     }
   ]
 }

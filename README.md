@@ -1,25 +1,25 @@
-# Carbon SRE
+# Azure Carbon SRE
 
-Carbon SRE is an Azure SRE Agent plugin marketplace for safe, repeatable Carbon Optimization operations. The installable `carbon-sre` package includes skills for report queries, assessment, spike investigation, optimization recommendations, and Live Report setup.
+Azure Carbon SRE is an Azure SRE Agent plugin marketplace for safe, repeatable Carbon Optimization operations. The installable `azure-carbon-sre` package includes skills for report queries, assessment, spike investigation, optimization recommendations, and Live Report setup.
 
 ## Install
 
-End users install this repository as a marketplace, then choose the `carbon-sre` plugin from the marketplace catalog. For direct URL installation, use `plugins/carbon-sre` as the path in the repository.
+End users install this repository as a marketplace, then choose the `azure-carbon-sre` plugin from the marketplace catalog. For direct URL installation, use `plugins/azure-carbon-sre` as the path in the repository.
 
-The importable package declares its skills explicitly in `plugins/carbon-sre/plugin.json`, matching the official Azure SRE Agent marketplace layout.
+The importable package declares its skills explicitly in `plugins/azure-carbon-sre/plugin.json`, matching the official Azure SRE Agent marketplace layout.
 
 ## Included plugin
 
 | Plugin | Description |
 | --- | --- |
-| [`carbon-sre`](plugins/carbon-sre/README.md) | Carbon Optimization reporting, assessment, spike investigation, evidence-gated optimization, and Live Report setup. |
+| [`azure-carbon-sre`](plugins/azure-carbon-sre/README.md) | Carbon Optimization reporting, assessment, spike investigation, evidence-gated optimization, and Live Report setup. |
 
 ## Prerequisites
 
 Before using a Carbon Optimization skill:
 
 1. Target an Azure subscription with Carbon Optimization data available.
-2. Authenticate to Azure Resource Manager (`https://management.azure.com`). For hosted agents, use the agent's managed identity and follow the [managed identity authentication guide](plugins/carbon-sre/README.md#managed-identity-authentication).
+2. Authenticate to Azure Resource Manager (`https://management.azure.com`). For hosted agents, use the agent's managed identity and follow the [managed identity authentication guide](plugins/azure-carbon-sre/README.md#managed-identity-authentication).
 3. Grant the calling user, service principal, or managed identity the **Carbon Optimization Reader** role on each target subscription.
 4. Use lowercase subscription IDs and first-of-month dates in report requests.
 5. Query the available data range before selecting report dates.
@@ -35,14 +35,14 @@ Do not add client secrets, bearer tokens, customer exports, or unredacted incide
 
 ## Live Report setup
 
-The plugin includes an exported [Carbon emissions overview setup](plugins/carbon-sre/templates/live-reports/carbon-emissions-overview.md). It defines the connector contract, subscription-selection rule, dashboard layout, and authoring prompt. Configure the connector first, then use `carbon-emissions-live-report` to create the saved Live Report.
+The plugin includes an exported [Carbon emissions overview setup](plugins/azure-carbon-sre/templates/live-reports/carbon-emissions-overview.md). It defines the connector contract, subscription-selection rule, dashboard layout, and authoring prompt. Configure the connector first, then use `carbon-emissions-live-report` to create the saved Live Report.
 
 ## Repository layout
 
 ```text
 .
 ├── .github/plugin/marketplace.json      # Marketplace manifest
-├── plugins/carbon-sre/                   # Installable plugin package
+├── plugins/azure-carbon-sre/             # Installable plugin package
 │   ├── plugin.json                       # Plugin manifest with skills/ declaration
 │   ├── skills/                           # Production skills imported by the plugin
 │   └── templates/                        # Supporting templates; not imported as skills
@@ -57,13 +57,13 @@ This section is for marketplace contributors, not an additional installation ste
 
 1. Add a self-contained package under `plugins/<plugin-name>/`.
 2. Register the package in [`.github/plugin/marketplace.json`](.github/plugin/marketplace.json).
-3. Declare its production skill directories in `plugin.json`; do not add a separate package's skills to `carbon-sre`.
+3. Declare its production skill directories in `plugin.json`; do not add a separate package's skills to `azure-carbon-sre`.
 4. Add a package README and an entry in [Included plugin](#included-plugin).
 5. Follow the full plugin and skill requirements in [CONTRIBUTING.md](CONTRIBUTING.md), then run the repository validation before opening a pull request.
 
 ## Develop
 
-Create skills in `plugins/carbon-sre/skills/<kebab-case-name>/SKILL.md`. Each skill must include frontmatter with a matching `name` and a specific `description` that explains when it should activate.
+Create skills in `plugins/azure-carbon-sre/skills/<kebab-case-name>/SKILL.md`. Each skill must include frontmatter with a matching `name` and a specific `description` that explains when it should activate.
 
 Validate the marketplace and plugin before opening a pull request:
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the Carbon SRE marketplace and installable plugin package with PyYAML."""
+"""Validate the Azure Carbon SRE marketplace and installable plugin package with PyYAML."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-PLUGIN_NAME = "carbon-sre"
+PLUGIN_NAME = "azure-carbon-sre"
 PLUGIN_ROOT = ROOT / "plugins" / PLUGIN_NAME
 MARKETPLACE_PATH = ROOT / ".github" / "plugin" / "marketplace.json"
 NAME_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]*$")
@@ -59,8 +59,8 @@ def parse_frontmatter(path: Path) -> dict[str, object]:
 
 def validate_marketplace() -> None:
     marketplace = load_json(MARKETPLACE_PATH, "marketplace.json")
-    if marketplace.get("name") != "carbon-sre-plugins":
-        fail("marketplace name must be carbon-sre-plugins")
+    if marketplace.get("name") != "azure-carbon-sre-plugins":
+        fail("marketplace name must be azure-carbon-sre-plugins")
 
     owner = marketplace.get("owner")
     metadata = marketplace.get("metadata")
@@ -105,7 +105,7 @@ def validate_manifest() -> None:
 def validate_skills() -> None:
     skill_paths = sorted((PLUGIN_ROOT / "skills").glob("*/SKILL.md"))
     if not skill_paths:
-        fail("at least one plugins/carbon-sre/skills/<name>/SKILL.md file is required")
+        fail("at least one plugins/azure-carbon-sre/skills/<name>/SKILL.md file is required")
 
     for path in skill_paths:
         metadata = parse_frontmatter(path)

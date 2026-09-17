@@ -1,6 +1,6 @@
-# carbon-sre
+# azure-carbon-sre
 
-`carbon-sre` is an Azure SRE Agent plugin for safe, repeatable Azure Carbon Optimization operations.
+`azure-carbon-sre` is an Azure SRE Agent plugin for safe, repeatable Azure Carbon Optimization operations.
 
 ## Included capabilities
 
@@ -12,11 +12,11 @@
 
 ## Install
 
-Install the parent repository as a marketplace, then select the `carbon-sre` plugin. For direct repository installation, use `plugins/carbon-sre` as the package path.
+Install the parent repository as a marketplace, then select the `azure-carbon-sre` plugin. For direct repository installation, use `plugins/azure-carbon-sre` as the package path.
 
 ## Prerequisites
 
-See the parent [Carbon SRE prerequisites](../../README.md#prerequisites) before running a Carbon Optimization skill. In particular, the calling identity needs the **Carbon Optimization Reader** role on every target subscription.
+See the parent [Azure Carbon SRE prerequisites](../../README.md#prerequisites) before running a Carbon Optimization skill. In particular, the calling identity needs the **Carbon Optimization Reader** role on every target subscription.
 
 A saved Live Report also requires a read-only Carbon connector. Installing this plugin alone does not provision a connector.
 
