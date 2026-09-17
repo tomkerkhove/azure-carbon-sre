@@ -65,7 +65,7 @@ Use this mode when no Carbon connector is configured but the user explicitly wan
 2. Acquire a fresh Azure Resource Manager token through the configured managed identity. Never expose the token in HTML, logs, prompts, or task output.
 3. Query the available range, then request `OverallSummaryReport` and `MonthlySummaryReport` for the selected range. Request latest-month resource-type contributors and a resource drilldown when supported.
 4. Inspect `subscriptionAccessDecisionList` and pagination before interpreting `value`. A denial, missing month, failed contributor query, or incomplete page is a visible data-quality warning, not zero emissions.
-5. Render one self-contained HTML document. Escape all values; include a restrictive CSP with `connect-src 'self'`; do not include runtime calls, remote data fetches, or remediation actions. Include a decision-first headline, range total, comparable-period change, latest-month change, a monthly trend, primary contributors, and resource drilldown when available.
+5. Render one self-contained HTML document. Escape all values; include a restrictive CSP with `connect-src 'self'`; do not include runtime calls, remote data fetches, or remediation actions. Include a decision-first headline, latest-month value and change, selected-range comparison, monthly trend, primary contributors, and resource drilldown when available.
 6. Call `SaveReport` with the generated HTML file, exact scope-specific report name, validated `reportId` when present, and `allowedTools: []`.
 7. Verify the returned report ID and version. If data collection fails, save a clearly labelled failure snapshot without secrets only when doing so is safe; otherwise fail the run rather than publishing misleading values.
 
@@ -79,10 +79,17 @@ Each saved snapshot must state:
 - Emission values in kgCO2e with human-facing labels such as **Primary contributors:** rather than raw API field names.
 - That viewing the report does not trigger Azure or connector calls.
 
+### Static snapshot visual contract
+
+- Default to a simple white sustainability theme: forest-green text, subtle green data marks, restrained copper/yellow accents, flat surfaces, and no decorative texture, gradients, or shadows.
+- Use a compact data-first hierarchy: one latest-month metric, three range/benchmark KPIs, a monthly chart, a resource-type table, a short context/data-quality panel, and the top six resource rows.
+- Offer an accessible light/dark theme toggle. Light is the default; dark uses a near-black ledger surface. The toggle may change only local presentation, must use a nonce-protected inline script, `textContent` for its label, guarded localStorage, and no network or runtime-tool calls.
+- Verify both visual states before saving. Preserve the restrictive CSP and `allowedTools: []`.
+
 ## Report layout
 
-1. Freshness and access banner.
-2. KPI cards for selected-range total, comparable change, latest month, and latest-month movement.
+1. Compact freshness and scope banner with a local light/dark toggle for static snapshots.
+2. Latest-month metric and three selected-range benchmark cards.
 3. Monthly emissions trend.
-4. Latest-month resource-type contributor chart.
-5. Top-resource drilldown table with current emissions, prior emissions, absolute and percentage changes, location, and resource group when available.
+4. Latest-month resource-type contributor table and a short context/data-quality panel.
+5. Top-six resource drilldown table with current emissions, prior emissions, absolute change, location, and resource group when available.
