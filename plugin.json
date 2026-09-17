@@ -1,5 +1,5 @@
 {
   "name": "carbon-sre",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "Azure SRE Agent plugin for Carbon Optimization reporting, assessment, investigation, optimization, and Live Report setup."
 }
