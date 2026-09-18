@@ -1,5 +1,3 @@
-# Azure Carbon SRE
-
 <p align="center">
   <img src="assets/azure-carbon-sre-logo.svg" alt="Azure Carbon SRE — Automate, Optimize, Reduce" width="460">
 </p>
