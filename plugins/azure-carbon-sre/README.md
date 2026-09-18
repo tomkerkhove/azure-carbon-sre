@@ -4,6 +4,7 @@
 
 ## Included capabilities
 
+- `carbon-response-presentation` is the shared user-facing presentation contract loaded by every operational Carbon skill.
 - `carbon-optimization-reports` runs read-only, explicitly subscription-scoped Carbon Optimization report queries.
 - `carbon-emissions-assessment` establishes the shared scope, freshness, access, and trend record required by downstream workflows.
 - `carbon-emissions-spike-investigation` identifies category and resource contributors without asserting unsupported root causes.

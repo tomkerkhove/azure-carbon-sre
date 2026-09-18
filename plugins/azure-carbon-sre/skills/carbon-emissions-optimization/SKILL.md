@@ -33,9 +33,9 @@ Before proposing an action, require a completed assessment from `carbon-emission
 7. Offer read-only verification first. For any future mutating action, provide the exact target, impact, rollback, and approval step.
 8. State uncertainty explicitly. If utilization, cost, configuration, or deployment evidence is missing, say `No change recommended yet` and name the next verification needed.
 
-## User-facing presentation
+## Presentation dependency
 
-Every response must use sentence-cased headings and human-facing labels. Do not expose raw field names, camelCase keys, or schema-shaped labels to the user.
+Load `carbon-response-presentation` and follow its current SKILL.md before writing any user-facing output.
 
 Write a concise, decision-ready Markdown result in this order:
 

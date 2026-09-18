@@ -1,7 +1,7 @@
 {
   "name": "azure-carbon-sre",
-  "version": "0.2.0",
-  "description": "Azure Carbon SRE plugin for Carbon Optimization reporting, assessment, investigation, optimization, Live Report setup, and scoped static-snapshot task provisioning.",
+  "version": "0.3.0",
+  "description": "Azure Carbon SRE plugin for Carbon Optimization reporting, assessment, investigation, optimization, consistent presentation, Live Report setup, and scoped static-snapshot task provisioning.",
   "license": "MIT",
   "skills": [
     "skills/"

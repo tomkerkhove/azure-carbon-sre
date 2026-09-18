@@ -21,9 +21,9 @@ Use this skill as the first step for Carbon Optimization analysis. It produces a
 4. Check `subscriptionAccessDecisionList` and separate denied subscriptions from zero-emission results.
 5. Record any `skipToken`, missing months, or comparison values that would make interpretation incomplete.
 
-## User-facing presentation
+## Presentation dependency
 
-Every response must use sentence-cased headings and human-facing labels. Do not expose raw field names, camelCase keys, or schema-shaped labels to the user.
+Load `carbon-response-presentation` and follow its current SKILL.md before writing any user-facing output.
 
 Return concise, decision-ready Markdown in this order:
 

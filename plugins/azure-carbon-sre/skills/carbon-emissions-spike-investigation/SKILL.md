@@ -24,9 +24,9 @@ Use this skill after `carbon-emissions-assessment` returns a completed assessmen
 7. Render a monthly trend chart and a contributor bar chart when the report data supports them. Pair each chart with a one-sentence observation; do not substitute a chart for the underlying evidence table.
 8. Identify candidates for corroboration with cost, utilization, deployment, or service telemetry. Do not label a root cause until an independent source supports it.
 
-## User-facing presentation
+## Presentation dependency
 
-Every response must use sentence-cased headings and human-facing labels. Do not expose raw field names, camelCase keys, or schema-shaped labels to the user.
+Load `carbon-response-presentation` and follow its current SKILL.md before writing any user-facing output.
 
 Extend the assessment with concise, decision-ready Markdown. Use clear phrases and a table when comparing more than one contributor.
 

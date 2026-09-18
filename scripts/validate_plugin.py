@@ -15,6 +15,11 @@ ROOT = Path(__file__).resolve().parents[1]
 PLUGIN_NAME = "azure-carbon-sre"
 PLUGIN_ROOT = ROOT / "plugins" / PLUGIN_NAME
 MARKETPLACE_PATH = ROOT / ".github" / "plugin" / "marketplace.json"
+CORE_PRESENTATION_SKILL = "carbon-response-presentation"
+CORE_PRESENTATION_LOAD_DIRECTIVE = (
+    "Load `carbon-response-presentation` and follow its current SKILL.md before "
+    "writing any user-facing output."
+)
 NAME_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 SEMVER_PATTERN = re.compile(r"^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$")
 PRESENTATION_CONTRACT = (
@@ -117,9 +122,11 @@ def validate_skills() -> None:
     if not skill_paths:
         fail("at least one plugins/azure-carbon-sre/skills/<name>/SKILL.md file is required")
 
+    skill_names = set()
     for path in skill_paths:
         metadata = parse_frontmatter(path)
         expected_name = path.parent.name
+        skill_names.add(expected_name)
         if metadata.get("name") != expected_name:
             fail(
                 f"{path.relative_to(ROOT)} frontmatter name must match directory "
@@ -127,13 +134,23 @@ def validate_skills() -> None:
             )
         if not NAME_PATTERN.fullmatch(metadata["name"]):
             fail(f"{path.relative_to(ROOT)} name must be lowercase kebab-case")
+
         content = path.read_text(encoding="utf-8")
-        presentation_sections = list(PRESENTATION_SECTION_PATTERN.finditer(content))
-        if len(presentation_sections) != 1 or PRESENTATION_CONTRACT not in presentation_sections[0].group("section"):
+        if expected_name == CORE_PRESENTATION_SKILL:
+            presentation_sections = list(PRESENTATION_SECTION_PATTERN.finditer(content))
+            if len(presentation_sections) != 1 or PRESENTATION_CONTRACT not in presentation_sections[0].group("section"):
+                fail(
+                    f"{path.relative_to(ROOT)} must include exactly one user-facing "
+                    "presentation section containing the shared presentation contract"
+                )
+        elif CORE_PRESENTATION_LOAD_DIRECTIVE not in content:
             fail(
-                f"{path.relative_to(ROOT)} must include exactly one user-facing "
-                "presentation section containing the shared presentation contract"
+                f"{path.relative_to(ROOT)} must load {CORE_PRESENTATION_SKILL} "
+                "before writing user-facing output"
             )
+
+    if CORE_PRESENTATION_SKILL not in skill_names:
+        fail(f"Missing required shared skill: {CORE_PRESENTATION_SKILL}")
 
 
 def validate_scheduled_task_assets() -> None:

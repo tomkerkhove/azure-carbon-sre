@@ -26,11 +26,11 @@ Never describe a static snapshot as a connector-backed or view-time-live report.
 - Use only read-only Carbon and Azure queries. Do not include remediation buttons in the first report version.
 - Display the selected scope, included carbon scopes, available-through date, access denials, missing months, pagination state, and empty-data states prominently.
 
-## User-facing presentation
+## Presentation dependency
 
-Every response must use sentence-cased headings and human-facing labels. Do not expose raw field names, camelCase keys, or schema-shaped labels to the user.
+Load `carbon-response-presentation` and follow its current SKILL.md before writing any user-facing output.
 
-For setup summaries, lead with the chosen mode, explicit scope, refresh behavior, and any access or data-quality limitation. For rendered reports, use a decision-first headline, readable kgCO2e labels, and plain-language chart takeaways; never render raw connector payloads or API-shaped labels.
+For setup summaries, lead with the chosen mode, explicit scope, refresh behavior, and any access or data-quality limitation. For rendered reports, use a decision-first headline, readable kgCO2e labels, and plain-language chart takeaways.
 
 ## Connector-backed Live Report
 
