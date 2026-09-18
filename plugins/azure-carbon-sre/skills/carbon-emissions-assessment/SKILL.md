@@ -21,23 +21,21 @@ Use this skill as the first step for Carbon Optimization analysis. It produces a
 4. Check `subscriptionAccessDecisionList` and separate denied subscriptions from zero-emission results.
 5. Record any `skipToken`, missing months, or comparison values that would make interpretation incomplete.
 
-## Assessment record
+## User-facing presentation
 
-Return this structure in the response so downstream skills can reuse it:
+Every response must use sentence-cased headings and human-facing labels. Do not expose raw field names, camelCase keys, or schema-shaped labels to the user.
 
-```text
-CarbonAssessment
-- subscriptions: <explicit selected IDs>
-- scopes: <Scope1/Scope2/Scope3 selection>
-- availableThrough: <date from availability API>
-- period: <start and end month>
-- access: <allowed and denied subscriptions>
-- baseline: <overall and monthly totals, units kgCO2e>
-- trend: <month-over-month movement>
-- dataGaps: <freshness, pagination, missing months, or access limitations>
-- evidenceStatus: <ready | incomplete>
-```
+Return concise, decision-ready Markdown in this order:
+
+1. `## Carbon emissions assessment` with a one-line takeaway that distinguishes the selected-period trend from the latest available month.
+2. `### Scope and freshness` with the explicit subscriptions, carbon scopes, available-through date, and reporting period.
+3. A three-column scorecard table for selected-period total, latest available month, and latest month-over-month change, all in kgCO2e.
+4. `### Monthly trend` with a chart when the monthly series is available, followed by one plain-language takeaway. Use a compact table only when chart rendering is unavailable.
+5. `### Data quality` with allowed and denied subscriptions, missing months, pagination state, freshness limits, and any comparison-baseline revision. Never describe a denial, gap, or empty optional response as zero emissions.
+6. `### Evidence status` with **Ready** or **Incomplete**, followed by the exact reason and the next read-only verification when incomplete.
+
+Keep the explicit scope, range, access outcome, baseline, trend, data-quality limitations, and evidence status in the visible response so downstream Carbon skills can reuse them. Do not emit a `CarbonAssessment` object, a code-block schema, or an internal field-name inventory.
 
 ## Completion rule
 
-Set `evidenceStatus` to `ready` only when the subscription scope is explicit, access outcomes are known, and the selected period is within the returned available range. Do not diagnose causes or recommend changes in this skill.
+Set **Evidence status: Ready** only when the subscription scope is explicit, access outcomes are known, and the selected period is within the returned available range. Do not diagnose causes or recommend changes in this skill.

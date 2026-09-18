@@ -26,6 +26,12 @@ Never describe a static snapshot as a connector-backed or view-time-live report.
 - Use only read-only Carbon and Azure queries. Do not include remediation buttons in the first report version.
 - Display the selected scope, included carbon scopes, available-through date, access denials, missing months, pagination state, and empty-data states prominently.
 
+## User-facing presentation
+
+Every response must use sentence-cased headings and human-facing labels. Do not expose raw field names, camelCase keys, or schema-shaped labels to the user.
+
+For setup summaries, lead with the chosen mode, explicit scope, refresh behavior, and any access or data-quality limitation. For rendered reports, use a decision-first headline, readable kgCO2e labels, and plain-language chart takeaways; never render raw connector payloads or API-shaped labels.
+
 ## Connector-backed Live Report
 
 Use this mode only after confirming a read-only Carbon connector exists. Its identity must meet the shared RBAC preconditions.
@@ -57,8 +63,8 @@ Use this mode when no Carbon connector is configured but the user explicitly wan
 3. Choose an intentional cadence. Carbon data is monthly, so weekly or daily refreshes are normally sufficient; avoid high-frequency polling.
 4. List existing scheduled tasks and reports first. Use a stable scope-specific task name such as `Carbon: Emissions Snapshot (<subscription-id>)`; do not reuse a generic dashboard name.
 5. During interactive setup, compare scope, cadence, purpose, and mode for each similar task or report. Ask the user to choose reuse, replacement, or a distinct name before altering an existing object.
-5. Create one named task with an explicit subscription scope, safe read-only constraints, and a rollback path: pausing or cancelling that exact task.
-6. State that the report will first exist after the task's first successful execution if there is no immediate-run capability.
+6. Create one named task with an explicit subscription scope, safe read-only constraints, and a rollback path: pausing or cancelling that exact task.
+7. State that the report will first exist after the task's first successful execution if there is no immediate-run capability.
 
 ### Per-run procedure
 

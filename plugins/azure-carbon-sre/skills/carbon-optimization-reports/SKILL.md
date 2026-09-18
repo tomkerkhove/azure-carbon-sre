@@ -50,9 +50,15 @@ See [managed identity authentication](../../README.md#managed-identity-authentic
 ## Interpretation
 
 - Emissions values are expressed in kgCO2e.
-- `latestMonthEmissions` represents the requested range; `previousMonthEmissions` is the comparable prior range.
-- `monthOverMonthEmissionsChangeRatio` is a ratio, not a percentage. Multiply by 100 only when presenting it as a percentage.
+- Latest-month emissions represent the requested range; previous-month emissions are the comparable prior range.
+- The month-over-month emissions-change ratio is a ratio, not a percentage. Multiply by 100 only when presenting it as a percentage.
 - State the subscription scope, date range, included scopes, report type, and any denied subscriptions with every summary.
+
+## User-facing presentation
+
+Every response must use sentence-cased headings and human-facing labels. Do not expose raw field names, camelCase keys, or schema-shaped labels to the user.
+
+Lead with a one-line takeaway, then show scope and freshness, a compact kgCO2e comparison table, and data-quality limitations. Use a monthly trend chart with a one-sentence takeaway when the series is available; otherwise use a compact table. Label access denials, missing months, incomplete pagination, and unavailable comparison values explicitly instead of returning raw API payloads or treating gaps as zero.
 
 ## References
 

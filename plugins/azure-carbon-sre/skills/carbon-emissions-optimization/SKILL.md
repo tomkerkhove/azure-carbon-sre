@@ -9,7 +9,7 @@ Use this skill to prioritize optimization opportunities. It does not make Azure 
 
 ## Required evidence gate
 
-Before proposing an action, require a `CarbonAssessment` from `carbon-emissions-assessment` with `evidenceStatus: ready`.
+Before proposing an action, require a completed assessment from `carbon-emissions-assessment` with **Evidence status: Ready**.
 
 - If the user asks for optimization directly, assess the state first instead of producing generic recommendations.
 - If a material increase or concentrated contributor exists, use `carbon-emissions-spike-investigation` before suggesting a cause-specific action.
@@ -33,13 +33,15 @@ Before proposing an action, require a `CarbonAssessment` from `carbon-emissions-
 7. Offer read-only verification first. For any future mutating action, provide the exact target, impact, rollback, and approval step.
 8. State uncertainty explicitly. If utilization, cost, configuration, or deployment evidence is missing, say `No change recommended yet` and name the next verification needed.
 
-## Output format
+## User-facing presentation
+
+Every response must use sentence-cased headings and human-facing labels. Do not expose raw field names, camelCase keys, or schema-shaped labels to the user.
 
 Write a concise, decision-ready Markdown result in this order:
 
 1. `## Carbon optimization snapshot` with the one-line takeaway.
 2. A three-column scorecard table for selected-period total, latest available month, and latest month-over-month change.
-3. A visible data-freshness note that includes the `availableThrough` date and material data gaps.
+3. A visible data-freshness note that includes the available-through date and material data gaps.
 4. `### Charts` with a monthly emissions trend and contributor bar chart when data is available, followed by one sentence explaining what each chart shows.
 5. `### What changed` with a prioritized table: priority, target, measured signal, and next read-only validation.
 6. `### Resource proof` with resource ID, type, location, state, and current SKU or capacity for the leading resource-level candidates. State unavailable proof explicitly.
