@@ -5,12 +5,12 @@ description: Investigate a Carbon Optimization emissions increase by extending a
 
 # Carbon emissions spike investigation
 
-Use this skill after `carbon-emissions-assessment` establishes a `CarbonAssessment` with `evidenceStatus: ready`.
+Use this skill after `carbon-emissions-assessment` returns a completed assessment with **Evidence status: Ready**.
 
 ## Preconditions
 
-- If the assessment record is missing or incomplete, run the assessment first.
-- Do not infer a subscription scope from earlier conversations; reuse only the explicit IDs recorded in `CarbonAssessment`.
+- If the assessment is missing or incomplete, run the assessment first.
+- Do not infer a subscription scope from earlier conversations; reuse only the explicit IDs shown in the assessment's scope section.
 - Treat reported emissions movement as a signal, not proof of a deployment, configuration, or usage cause.
 
 ## Investigation workflow
@@ -24,9 +24,11 @@ Use this skill after `carbon-emissions-assessment` establishes a `CarbonAssessme
 7. Render a monthly trend chart and a contributor bar chart when the report data supports them. Pair each chart with a one-sentence observation; do not substitute a chart for the underlying evidence table.
 8. Identify candidates for corroboration with cost, utilization, deployment, or service telemetry. Do not label a root cause until an independent source supports it.
 
-## Output
+## Presentation dependency
 
-Extend the assessment with concise, decision-ready Markdown. Do not expose raw field names, camelCase keys, or schema-shaped labels to the user. Use sentence-cased headings and clear phrases; use a table when comparing more than one contributor.
+Load `carbon-response-presentation` and follow its current SKILL.md before writing any user-facing output.
+
+Extend the assessment with concise, decision-ready Markdown. Use clear phrases and a table when comparing more than one contributor.
 
 ```text
 ### Investigation

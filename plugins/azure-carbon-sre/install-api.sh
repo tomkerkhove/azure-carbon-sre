@@ -163,6 +163,7 @@ import json
 import os
 import sys
 expected = {
+    "carbon-response-presentation",
     "carbon-optimization-reports",
     "carbon-emissions-assessment",
     "carbon-emissions-spike-investigation",

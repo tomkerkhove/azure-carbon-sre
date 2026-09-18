@@ -25,7 +25,7 @@ spec:
     - This task is authorized for **only** lowercase subscription `__CARBON_SUBSCRIPTION__`. Do not default to the agent subscription, a previous scope, or another accessible subscription. Do not add subscriptions, resource groups, or management groups.
     - Use only read-only Carbon and Azure operations. Never create, update, delete, grant, revoke, deploy, or modify Azure resources, scheduled tasks, or RBAC assignments.
     - Obtain a fresh Azure Resource Manager token through the configured user-assigned managed identity client ID `__CARBON_IDENTITY_CLIENT_ID__`. Keep the token in memory only; do not write it to HTML, files, task output, logs, or errors.
-    - Load and follow the installed `carbon-optimization-reports` and `carbon-emissions-live-report` skills. This task is a **Static snapshot**, not a connector-backed report.
+    - Load and follow the installed `carbon-response-presentation`, `carbon-optimization-reports`, and `carbon-emissions-live-report` skills. This task is a **Static snapshot**, not a connector-backed report.
 
     ## Collect evidence
 

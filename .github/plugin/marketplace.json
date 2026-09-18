@@ -4,13 +4,13 @@
     "name": "Tom Kerkhove"
   },
   "metadata": {
-    "description": "Azure Carbon SRE skills, Live Report setup, and scoped static-snapshot task provisioning for Azure SRE Agent.",
-    "version": "1.1.0"
+    "description": "Azure Carbon SRE skills, consistent presentation, Live Report setup, and scoped static-snapshot task provisioning for Azure SRE Agent.",
+    "version": "1.2.0"
   },
   "plugins": [
     {
       "name": "azure-carbon-sre",
-      "description": "Azure Carbon SRE plugin for Carbon Optimization reporting, assessment, investigation, optimization, Live Report setup, and scoped static-snapshot task provisioning.",
+      "description": "Azure Carbon SRE plugin for Carbon Optimization reporting, assessment, investigation, optimization, consistent presentation, Live Report setup, and scoped static-snapshot task provisioning.",
       "source": "./plugins/azure-carbon-sre"
     }
   ]

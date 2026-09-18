@@ -50,9 +50,15 @@ See [managed identity authentication](../../README.md#managed-identity-authentic
 ## Interpretation
 
 - Emissions values are expressed in kgCO2e.
-- `latestMonthEmissions` represents the requested range; `previousMonthEmissions` is the comparable prior range.
-- `monthOverMonthEmissionsChangeRatio` is a ratio, not a percentage. Multiply by 100 only when presenting it as a percentage.
+- Latest-month emissions represent the requested range; previous-month emissions are the comparable prior range.
+- The month-over-month emissions-change ratio is a ratio, not a percentage. Multiply by 100 only when presenting it as a percentage.
 - State the subscription scope, date range, included scopes, report type, and any denied subscriptions with every summary.
+
+## Presentation dependency
+
+Load `carbon-response-presentation` and follow its current SKILL.md before writing any user-facing output.
+
+Lead with a one-line takeaway, then show scope and freshness, a compact kgCO2e comparison table, and data-quality limitations. Label access denials, missing months, incomplete pagination, and unavailable comparison values explicitly instead of returning raw API payloads or treating gaps as zero.
 
 ## References
 
