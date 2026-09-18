@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 import yaml
@@ -119,10 +121,38 @@ def validate_skills() -> None:
             fail(f"{path.relative_to(ROOT)} name must be lowercase kebab-case")
 
 
+def validate_scheduled_task_assets() -> None:
+    task_root = PLUGIN_ROOT / "scheduled-tasks"
+    required = (
+        PLUGIN_ROOT / "install-api.sh",
+        task_root / "task-manifest.json",
+        task_root / "render_tasks.py",
+        task_root / "prompts" / "carbon-static-snapshot.txt",
+        task_root / "carbon-static-snapshot-weekly.yaml",
+    )
+    for path in required:
+        if not path.is_file():
+            fail(f"Required scheduled-task asset is missing: {path.relative_to(ROOT)}")
+
+    result = subprocess.run(
+        [sys.executable, str(task_root / "render_tasks.py"), "check"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode:
+        fail(
+            "Scheduled-task validation failed: "
+            + (result.stderr.strip() or result.stdout.strip() or "unknown error")
+        )
+
+
 def main() -> None:
     validate_marketplace()
     validate_manifest()
     validate_skills()
+    validate_scheduled_task_assets()
     print("Marketplace and plugin validation passed.")
 
 

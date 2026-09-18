@@ -1,0 +1,39 @@
+Author and save the static Carbon Optimization emissions snapshot `{{CARBON_REPORT_NAME}}` now. Do not ask questions or broaden scope.
+
+## Fixed scope and safety
+
+- This task is authorized for **only** lowercase subscription `{{CARBON_SUBSCRIPTION}}`. Do not default to the agent subscription, a previous scope, or another accessible subscription. Do not add subscriptions, resource groups, or management groups.
+- Use only read-only Carbon and Azure operations. Never create, update, delete, grant, revoke, deploy, or modify Azure resources, scheduled tasks, or RBAC assignments.
+- Obtain a fresh Azure Resource Manager token through the configured user-assigned managed identity client ID `{{CARBON_IDENTITY_CLIENT_ID}}`. Keep the token in memory only; do not write it to HTML, files, task output, logs, or errors.
+- Load and follow the installed `carbon-optimization-reports` and `carbon-emissions-live-report` skills. This task is a **Static snapshot**, not a connector-backed report.
+
+## Collect evidence
+
+1. Request `POST /providers/Microsoft.Carbon/queryCarbonEmissionDataAvailableDateRange?api-version=2025-04-01` for `{{CARBON_SUBSCRIPTION}}` before choosing dates.
+2. Use the latest available reporting window containing at most 12 complete first-of-month periods. Record the exact first-of-month start and end values, returned month count, and available-through date.
+3. For carbon scopes `Scope1`, `Scope2`, and `Scope3`, request `OverallSummaryReport` and `MonthlySummaryReport` through `POST /providers/Microsoft.Carbon/carbonEmissionReports?api-version=2025-04-01` with `subscriptionList` limited to `{{CARBON_SUBSCRIPTION}}`.
+4. For the latest available month, request `TopItemsMonthlySummaryReport` grouped by `ResourceType` and request `ItemDetailsReport`. Follow every `skipToken` until absent. If pagination cannot complete, retain only the safely collected values and show an explicit incomplete-pagination warning.
+5. Inspect every `subscriptionAccessDecisionList` before interpreting `value`. Access denials, unavailable months, failed optional contributor requests, empty data, and incomplete pagination are visible data-quality warnings - never treat them as zero emissions.
+
+## Resolve the report safely
+
+1. Call `ListReports` and find the exact report name `{{CARBON_REPORT_NAME}}`.
+2. If no exact match exists, create it. If exactly one exact match exists, call `GetReport` and reuse its `reportId` only when its HTML is visibly marked **Static snapshot** and names subscription `{{CARBON_SUBSCRIPTION}}` as its sole scope.
+3. If duplicate exact-name reports exist, or the existing report is connector-backed, unmarked, or scoped differently, stop without calling `SaveReport` and return the conflict. Do not overwrite an ambiguous report.
+
+## Render and save
+
+Create one self-contained HTML document with no remote assets, fetches, runtime tool calls, or remediation actions. Escape every dynamic value and use a restrictive CSP with `connect-src 'self'`.
+
+Use the simple white sustainability design: forest-green text, subtle green data marks, restrained copper/yellow accents, flat surfaces, no texture, gradients, or shadows. Include:
+
+- a compact **Static snapshot** banner with UTC refresh time, sole subscription scope, included carbon scopes, available-through date, and report range;
+- one latest-month kgCO2e metric and three range/benchmark KPIs;
+- a 13-month monthly-emissions trend when data permits;
+- the latest-month resource-type contributor table;
+- a short context and data-quality panel; and
+- at most six resource rows with current emissions, prior emissions, absolute change, location, and resource group when available.
+
+Offer an accessible local light/dark toggle. Light is the default; dark is a near-black ledger surface. The nonce-protected inline script may change local presentation only, must use `textContent` for its label and guarded `localStorage`, and must make no network or runtime-tool calls.
+
+Call `SaveReport` with the generated HTML, exact name `{{CARBON_REPORT_NAME}}`, the verified reused `reportId` when present, and `allowedTools: []`. Confirm the returned report ID and version. If mandatory data collection fails before a safe report can be rendered, fail the task instead of publishing misleading data.
