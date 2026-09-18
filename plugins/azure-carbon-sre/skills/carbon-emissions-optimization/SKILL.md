@@ -30,8 +30,12 @@ Before proposing an action, require a completed assessment from `carbon-emission
 6. Evaluate capacity actions with configuration and recent utilization evidence:
    - Recommend a horizontal scale-in only when capacity is above the minimum, utilization and queue/error signals show sustained headroom, and the exact instance reduction and validation signal are known.
    - If capacity is already one, state that horizontal scale-in is unavailable. Assess a SKU scale-down separately and only after confirming application runtime, networking, availability, and feature compatibility.
-7. Offer read-only verification first. For any future mutating action, provide the exact target, impact, rollback, and approval step.
-8. State uncertainty explicitly. If utilization, cost, configuration, or deployment evidence is missing, say `No change recommended yet` and name the next verification needed.
+7. When Azure API Management (`Microsoft.ApiManagement/service`) appears as a contributor, check for a multi-region deployment before proposing a capacity change: look for `additionalLocations` in the resource definition, or a `Capacity` metric split across more than one value of the `Location` dimension. If either signal is present, recommend evaluating APIM's built-in sustainability capabilities:
+   - **Traffic shaping**: policies that read the current region's carbon-intensity context and throttle, delay, or reroute non-critical calls when intensity is high.
+   - **Traffic shifting**: the built-in backend load balancer across `additionalLocations`, weighted to prefer lower-carbon-intensity regions while preserving failover.
+   - State that this is a Premium-tier, multi-region-only capability, and confirm the SKU and `additionalLocations` count as resource proof before recommending it. Treat it as a policy/configuration change, not a capacity or SKU change, and still require a rollback and validation step.
+8. Offer read-only verification first. For any future mutating action, provide the exact target, impact, rollback, and approval step.
+9. State uncertainty explicitly. If utilization, cost, configuration, or deployment evidence is missing, say `No change recommended yet` and name the next verification needed.
 
 ## Presentation dependency
 
@@ -46,9 +50,10 @@ Write a concise, decision-ready Markdown result in this order:
 5. `### What changed` with a prioritized table: priority, target, measured signal, and next read-only validation.
 6. `### Resource proof` with resource ID, type, location, state, and current SKU or capacity for the leading resource-level candidates. State unavailable proof explicitly.
 7. `### Capacity decision` for compute candidates: distinguish horizontal scale-in, SKU scale-down, and no action; state the observed metric evidence and compatibility gaps.
-8. `### Historical items to close` only when a historical spike needs ownership or lifecycle validation. Do not present it as a current optimization opportunity.
-9. `### Evidence and decision` that lists corroborating evidence, gaps, and either a safe next action or `No change recommended yet`.
-10. One plain-language candidate section for each item in the action table when more detail is useful.
+8. `### Multi-region sustainability` for Azure API Management candidates with `additionalLocations` or a multi-location `Capacity` metric: recommend evaluating policy-based traffic shaping and load-balanced traffic shifting, and state the SKU and region evidence.
+9. `### Historical items to close` only when a historical spike needs ownership or lifecycle validation. Do not present it as a current optimization opportunity.
+10. `### Evidence and decision` that lists corroborating evidence, gaps, and either a safe next action or `No change recommended yet`.
+11. One plain-language candidate section for each item in the action table when more detail is useful.
 
 Use kgCO2e units consistently. Use tables for comparisons, not nested bullets. Do not claim that a contributor is a root cause or that a change will reduce emissions without independent evidence.
 
