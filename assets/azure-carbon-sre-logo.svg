@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Azure Carbon SRE</title>
+  <desc id="desc">Azure Carbon SRE logo with a blue angular mark, green leaf, and the words Automate, Optimize, Reduce.</desc>
+  <defs>
+    <linearGradient id="azure-light" x1="70" y1="45" x2="355" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#27B7F2"/>
+      <stop offset="1" stop-color="#0078D4"/>
+    </linearGradient>
+    <linearGradient id="azure-dark" x1="210" y1="40" x2="365" y2="365" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D91D6"/>
+      <stop offset="1" stop-color="#005BAA"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="195" y1="313" x2="472" y2="507" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#75D84C"/>
+      <stop offset="1" stop-color="#00A443"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#003A70" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M26 469 208 81c7-15 22-25 39-25h126L192 469H26Z" fill="url(#azure-light)"/>
+    <path d="M192 469 373 56l159 315-117 55-80-170-66 149-77 64Z" fill="url(#azure-dark)"/>
+    <path d="M266 335c71-70 157-94 235-83 6 83-31 177-115 235-45 31-99 44-155 40 8-84 24-140 35-192Z" fill="url(#leaf)"/>
+    <path d="M231 527c47-78 116-137 212-189" fill="none" stroke="#00853B" stroke-linecap="round" stroke-width="9"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-weight="700">
+    <text x="554" y="191" fill="#002F6C" font-size="142" letter-spacing="-8">Azure</text>
+    <text x="554" y="350" fill="#00A443" font-size="151" letter-spacing="-9">Carbon</text>
+    <text x="554" y="512" fill="#002F6C" font-size="159" letter-spacing="-8">SRE</text>
+  </g>
+  <g fill="#173A5E" font-family="Arial, Helvetica, sans-serif" font-size="39" font-weight="700" letter-spacing="1">
+    <text x="176" y="621">AUTOMATE</text>
+    <text x="505" y="621">OPTIMIZE</text>
+    <text x="850" y="621">REDUCE</text>
+  </g>
+  <g fill="#0078D4" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">
+    <text x="442" y="620">/</text>
+    <text x="799" y="620">/</text>
+  </g>
+</svg>

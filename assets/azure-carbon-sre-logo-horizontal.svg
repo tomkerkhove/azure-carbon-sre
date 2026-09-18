@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 512" role="img" aria-labelledby="title desc">
+  <title id="title">Azure Carbon SRE</title>
+  <desc id="desc">Horizontal Azure Carbon SRE logo with a blue angular mark, green leaf, wordmark, and Automate, Optimize, Reduce tagline.</desc>
+  <defs>
+    <linearGradient id="azure-light" x1="32" y1="32" x2="294" y2="436" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#27B7F2"/>
+      <stop offset="1" stop-color="#0078D4"/>
+    </linearGradient>
+    <linearGradient id="azure-dark" x1="145" y1="29" x2="322" y2="327" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D91D6"/>
+      <stop offset="1" stop-color="#005BAA"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="156" y1="273" x2="402" y2="430" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#75D84C"/>
+      <stop offset="1" stop-color="#00A443"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M16 428 177 82c7-14 21-23 36-23h114L166 428H16Z" fill="url(#azure-light)"/>
+    <path d="M166 428 327 59l143 282-105 50-71-151-59 130-69 58Z" fill="url(#azure-dark)"/>
+    <path d="M232 312c63-62 138-83 207-74 6 74-27 157-101 208-40 28-87 39-136 36 7-74 21-124 30-170Z" fill="url(#leaf)"/>
+    <path d="M202 482c41-69 102-120 187-165" fill="none" stroke="#00853B" stroke-linecap="round" stroke-width="8"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-weight="700">
+    <text x="525" y="198" fill="#002F6C" font-size="150" letter-spacing="-8">Azure</text>
+    <text x="525" y="357" fill="#00A443" font-size="159" letter-spacing="-9">Carbon</text>
+    <text x="1088" y="357" fill="#002F6C" font-size="159" letter-spacing="-8">SRE</text>
+  </g>
+  <g fill="#173A5E" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" letter-spacing="1">
+    <text x="527" y="440">AUTOMATE</text>
+    <text x="813" y="440">OPTIMIZE</text>
+    <text x="1109" y="440">REDUCE</text>
+  </g>
+  <g fill="#0078D4" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">
+    <text x="761" y="440">/</text>
+    <text x="1055" y="440">/</text>
+  </g>
+</svg>
