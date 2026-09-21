@@ -36,10 +36,10 @@ Before proposing an action, require a completed assessment from `carbon-emission
 8. For eligible API Management contributors on the Developer, Basic, Standard, or Premium tier, evaluate [**traffic shaping**](https://learn.microsoft.com/en-us/azure/api-management/sustainability): policies that read the current region's carbon-intensity context and throttle, delay, or reroute non-critical calls when intensity is high. It does not depend on capacity, SKU, or region count.
 9. For eligible Premium-tier API Management contributors, evaluate **traffic shifting**: the built-in [backend load balancer across `additionalLocations`](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-deploy-multi-region), weighted to prefer lower-carbon-intensity regions while preserving failover. Confirm a multi-region deployment with either `additionalLocations` in the resource definition or a [`Capacity` metric](https://learn.microsoft.com/en-us/azure/api-management/api-management-capacity) split across more than one `Location` value; state any unavailable resource proof separately.
 10. For API Management capacity, apply the capacity-evaluation evidence requirements above with these API Management-specific exceptions:
-    - The [`Capacity` metric](https://learn.microsoft.com/en-us/azure/api-management/api-management-capacity) applies to every SKU except Consumption, which autoscales automatically.
-    - For Developer, Basic, Standard, and Premium tiers, recommend scale-in when the evidence supports it.
-    - Where supported, recommend [Azure Monitor autoscale](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-autoscale): it is available only on Basic, Standard, and Premium tiers and covers only the primary location in a multi-region deployment.
-    - Do not skip this track when traffic shaping or traffic shifting is recommended.
+   - The [`Capacity` metric](https://learn.microsoft.com/en-us/azure/api-management/api-management-capacity) applies to every SKU except Consumption, which autoscales automatically.
+   - For Developer, Basic, Standard, and Premium tiers, recommend scale-in when the evidence supports it.
+   - Where supported, recommend [Azure Monitor autoscale](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-autoscale): it is available only on Basic, Standard, and Premium tiers and covers only the primary location in a multi-region deployment.
+   - Do not skip this track when traffic shaping or traffic shifting is recommended.
 11. Confirm the SKU for every API Management recommendation. Treat traffic shaping and traffic shifting as policy/configuration changes, not capacity or SKU changes, and require a rollback and validation step for each.
 12. Offer read-only verification first. For any future mutating action, provide the exact target, impact, rollback, and approval step.
 13. State uncertainty explicitly. If utilization, cost, configuration, or deployment evidence is missing, say `No change recommended yet` and name the next verification needed.
@@ -57,7 +57,12 @@ Write a concise, decision-ready Markdown result in this order:
 5. `### What changed` with a prioritized table: priority, target, measured signal, and next read-only validation.
 6. `### Resource proof` with resource ID, type, location, state, and current SKU or capacity for the leading resource-level candidates. State unavailable proof explicitly.
 7. `### Capacity decision` for compute candidates: distinguish horizontal scale-in, autoscale configuration, SKU scale-down, and no action; state the observed metric evidence and compatibility gaps.
-8. `### API Management sustainability` for any Azure API Management candidate, presented as recommendations in their own right rather than only when a capacity change is proposed: after confirming limited-preview enrollment and regional availability, recommend policy-based traffic shaping regardless of region count or capacity signal; additionally recommend load-balanced traffic shifting when `additionalLocations` or a multi-location `Capacity` metric shows a multi-region deployment; and still apply the standard capacity decision (scale-in or autoscale) from the `Capacity decision` section as a complementary, independent track. State the preview eligibility, SKU, and region evidence for each recommendation.
+8. `### API Management sustainability` for any Azure API Management candidate, presented as recommendations in their own right rather than only when a capacity change is proposed:
+   - State the limited-preview enrollment and regional-availability evidence.
+   - Recommend policy-based traffic shaping regardless of region count or capacity signal when preview eligibility is confirmed.
+   - Recommend load-balanced traffic shifting when preview eligibility and either `additionalLocations` or a multi-location `Capacity` metric show a multi-region deployment.
+   - Apply the capacity decision from the `Capacity decision` section as a complementary, independent track.
+   - State the SKU and region evidence for each recommendation.
 9. `### Historical items to close` only when a historical spike needs ownership or lifecycle validation. Do not present it as a current optimization opportunity.
 10. `### Evidence and decision` that lists corroborating evidence, gaps, and either a safe next action or `No change recommended yet`.
 11. One plain-language candidate section for each item in the action table when more detail is useful.
