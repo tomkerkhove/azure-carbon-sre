@@ -31,6 +31,9 @@ Before proposing an action, require a completed assessment from `carbon-emission
    - Recommend a horizontal scale-in only when capacity is above the minimum, utilization and queue/error signals show sustained headroom, and the exact instance reduction and validation signal are known.
    - If capacity is already one, state that horizontal scale-in is unavailable. Assess a SKU scale-down separately and only after confirming application runtime, networking, availability, and feature compatibility.
    - Where the service supports autoscaling, prefer recommending it over a one-off scale-in when demand is variable, so capacity tracks load automatically instead of running a fixed, over-provisioned unit count. Link to the service's autoscale documentation when recommending it.
+
+### API Management-specific guidance
+
 7. For Azure API Management (`Microsoft.ApiManagement/service`) contributors, evaluate [sustainability capabilities](https://learn.microsoft.com/en-us/azure/api-management/sustainability) (preview) as recommendations in their own right, alongside the capacity evaluation above:
    - Before recommending either capability, verify that the subscription is enrolled in the limited preview and that each target region supports the preview. If either proof is unavailable, state `No change recommended yet` and name preview eligibility verification as the next step.
 8. For eligible API Management contributors on the Developer, Basic, Standard, or Premium tier, evaluate [**traffic shaping**](https://learn.microsoft.com/en-us/azure/api-management/sustainability): policies that read the current region's carbon-intensity context and throttle, delay, or reroute non-critical calls when intensity is high. It does not depend on capacity, SKU, or region count.
