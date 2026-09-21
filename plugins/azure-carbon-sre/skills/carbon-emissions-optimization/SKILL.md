@@ -41,7 +41,7 @@ Before proposing an action, require a completed assessment from `carbon-emission
 10. For API Management capacity, require configuration and recent-utilization evidence with these API Management-specific exceptions:
    - The [`Capacity` metric](https://learn.microsoft.com/en-us/azure/api-management/api-management-capacity) applies to every SKU except Consumption, which autoscales automatically.
    - For Developer, Basic, Standard, and Premium tiers, recommend scale-in when the evidence supports it.
-   - Where supported, recommend [Azure Monitor autoscale](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-autoscale): it is available only on Basic, Standard, and Premium tiers and covers only the primary location in a multi-region deployment.
+   - Where supported, recommend [Azure Monitor autoscale](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-autoscale): it is available only on Basic, Standard, and Premium tiers; the Developer tier does not support autoscale. It covers only the primary location in a multi-region deployment.
    - Do not skip this track when traffic shaping or traffic shifting is recommended.
 11. Confirm the SKU for every API Management recommendation. Treat traffic shaping and traffic shifting as policy/configuration changes, not capacity or SKU changes, and require a rollback and validation step for each.
 12. Offer read-only verification first. For any future mutating action, provide the exact target, impact, rollback, and approval step.
