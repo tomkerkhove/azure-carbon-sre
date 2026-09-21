@@ -30,6 +30,19 @@ Before proposing an action, require a completed assessment from `carbon-emission
 6. Evaluate capacity actions with configuration and recent utilization evidence:
    - Recommend a horizontal scale-in only when capacity is above the minimum, utilization and queue/error signals show sustained headroom, and the exact instance reduction and validation signal are known.
    - If capacity is already one, state that horizontal scale-in is unavailable. Assess a SKU scale-down separately and only after confirming application runtime, networking, availability, and feature compatibility.
+   - Where the service supports autoscaling, prefer recommending it over a one-off scale-in when demand is variable, so capacity tracks load automatically instead of running a fixed, over-provisioned unit count. Link to the service's autoscale documentation when recommending it.
+
+### API Management-specific guidance
+
+- **Preview eligibility:** For Azure API Management (`Microsoft.ApiManagement/service`) contributors, evaluate [sustainability capabilities](https://learn.microsoft.com/en-us/azure/api-management/sustainability) (preview) alongside the capacity evaluation above. Before recommending either capability, verify that the subscription is enrolled in the limited preview and that each target region supports the preview. If either proof is unavailable, state `No change recommended yet` and name preview eligibility verification as the next step.
+- **Traffic shaping:** After confirming limited-preview enrollment and regional availability, evaluate [traffic shaping](https://learn.microsoft.com/en-us/azure/api-management/sustainability) for eligible Developer, Basic, Standard, or Premium contributors. It uses policies that read the current region's carbon-intensity context and throttle, delay, or reroute non-critical calls when intensity is high. It does not depend on capacity, SKU, or region count.
+- **Traffic shifting:** For eligible Premium-tier contributors, evaluate the built-in [backend load balancer across `additionalLocations`](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-deploy-multi-region), weighted to prefer lower-carbon-intensity regions while preserving failover. Confirm a multi-region deployment with either `additionalLocations` in the resource definition or a [`Capacity` metric](https://learn.microsoft.com/en-us/azure/api-management/api-management-capacity) split across more than one `Location` value; state any unavailable resource proof separately.
+- **Capacity:** Require configuration and recent-utilization evidence with these exceptions:
+  - The [`Capacity` metric](https://learn.microsoft.com/en-us/azure/api-management/api-management-capacity) applies to every SKU except Consumption, which autoscales automatically.
+  - For all non-Consumption tiers (Developer, Basic, Standard, and Premium), recommend manual scale-in when the evidence supports it.
+  - Where supported, recommend [Azure Monitor autoscale](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-autoscale): it is available only on Basic, Standard, and Premium tiers; the Developer tier does not support autoscale. It covers only the primary location in a multi-region deployment.
+  - Do not skip this track when traffic shaping or traffic shifting is recommended.
+- **Change safeguards:** Confirm the SKU for every API Management recommendation. Treat traffic shaping and traffic shifting as policy/configuration changes, not capacity or SKU changes, and require a rollback and validation step for each.
 7. Offer read-only verification first. For any future mutating action, provide the exact target, impact, rollback, and approval step.
 8. State uncertainty explicitly. If utilization, cost, configuration, or deployment evidence is missing, say `No change recommended yet` and name the next verification needed.
 
@@ -45,10 +58,16 @@ Write a concise, decision-ready Markdown result in this order:
 4. `### Charts` with a monthly emissions trend and contributor bar chart when data is available, followed by one sentence explaining what each chart shows.
 5. `### What changed` with a prioritized table: priority, target, measured signal, and next read-only validation.
 6. `### Resource proof` with resource ID, type, location, state, and current SKU or capacity for the leading resource-level candidates. State unavailable proof explicitly.
-7. `### Capacity decision` for compute candidates: distinguish horizontal scale-in, SKU scale-down, and no action; state the observed metric evidence and compatibility gaps.
-8. `### Historical items to close` only when a historical spike needs ownership or lifecycle validation. Do not present it as a current optimization opportunity.
-9. `### Evidence and decision` that lists corroborating evidence, gaps, and either a safe next action or `No change recommended yet`.
-10. One plain-language candidate section for each item in the action table when more detail is useful.
+7. `### Capacity decision` for compute candidates: distinguish horizontal scale-in, autoscale configuration, SKU scale-down, and no action; state the observed metric evidence and compatibility gaps.
+8. `### API Management sustainability` for any Azure API Management candidate, presented as recommendations in their own right rather than only when a capacity change is proposed:
+   - State the limited-preview enrollment and regional-availability evidence.
+   - Recommend policy-based traffic shaping regardless of region count or capacity signal when preview eligibility is confirmed.
+   - Recommend load-balanced traffic shifting when preview eligibility and either `additionalLocations` or a multi-location `Capacity` metric show a multi-region deployment.
+   - Apply the capacity decision from the `Capacity decision` section as a complementary, independent track.
+   - State the SKU and region evidence for each recommendation.
+9. `### Historical items to close` only when a historical spike needs ownership or lifecycle validation. Do not present it as a current optimization opportunity.
+10. `### Evidence and decision` that lists corroborating evidence, gaps, and either a safe next action or `No change recommended yet`.
+11. One plain-language candidate section for each item in the action table when more detail is useful.
 
 Use kgCO2e units consistently. Use tables for comparisons, not nested bullets. Do not claim that a contributor is a root cause or that a change will reduce emissions without independent evidence.
 
